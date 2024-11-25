@@ -1,0 +1,8 @@
+<h1>My posts</h1>
+
+<%= for post <- posts do %>
+  <article>
+    <h2><%= post.title %></h2>
+    <p><%= post.body %></p>
+  </article>
+<% end %>
