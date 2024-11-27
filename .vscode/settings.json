@@ -3,5 +3,6 @@
     "conv",
     "lsock",
     "Servy"
-  ]
+  ],
+  "files.autoSave": "off"
 }

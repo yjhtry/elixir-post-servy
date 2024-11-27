@@ -9,11 +9,12 @@ defmodule Servy do
 
   def run do
     request = """
-    GET /api/posts HTTP/1.1\r
+    POST /post HTTP/1.1\r
     Host: localhost:4000\r
     User-Agent: curl/7.64.1\r
     Content-Type: application/x-www-form-urlencoded\r
     \r
+    title=elixir-learn&body=elixir-is-awesome
     """
 
     IO.puts(Handler.handle(request))

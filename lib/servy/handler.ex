@@ -43,11 +43,24 @@ defmodule Servy.Handler do
     PostController.create(conv, conv.params)
   end
 
+  def route(%Conv{method: "GET", path: "/post/recent"} = conv) do
+    PostController.get_recent(conv)
+  end
+
   def route(%Conv{method: "GET", path: "/about"} = conv) do
     @pages_dir
     |> Path.join("about.html")
     |> File.read()
     |> handle_file(conv)
+  end
+
+  def route(%Conv{method: "GET", path: "/snapshots"}) do
+    snapshots =
+      ["lei", "john", "kui"]
+      |> Enum.map(&Task.async(fn -> Servy.SnapshotServer.get_snapshot(&1) end))
+      |> Enum.map(&Task.await(&1))
+
+    %Conv{status: 200, resp_body: "#{inspect(snapshots)}"}
   end
 
   def route(%Conv{path: path} = conv) do

@@ -1,4 +1,5 @@
 defmodule Servy.PostController do
+  alias Servy.PostServer
   import Servy.Post
 
   @templates_path Path.expand("../../templates", __DIR__)
@@ -26,11 +27,23 @@ defmodule Servy.PostController do
     render(conv, "post.html.eex", post: post)
   end
 
-  def create(conv, %{"id" => id, "title" => title}) do
+  def create(conv, %{"title" => title, "body" => body}) do
+    {:response, post} = PostServer.create_post(title, body)
+
     %{
       conv
       | status: 200,
-        resp_body: "The Post is is #{id} title is #{title}"
+        resp_body: "Post created: #{post.id}"
+    }
+  end
+
+  def get_recent(conv) do
+    posts = PostServer.get_recent_posts()
+
+    %{
+      conv
+      | status: 200,
+        resp_body: inspect(posts)
     }
   end
 end
