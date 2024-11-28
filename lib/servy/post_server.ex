@@ -1,4 +1,4 @@
-defmodule Servy.GenServer do
+defmodule Servy.GenericServer do
   def start(callback_module, init_state, name) do
     pid = spawn(__MODULE__, :listen_loop, [init_state, callback_module])
 
@@ -43,19 +43,19 @@ defmodule Servy.PostServer do
   @name :post_server
 
   def start() do
-    Servy.GenServer.start(__MODULE__, [], @name)
+    Servy.GenericServer.start(__MODULE__, [], @name)
   end
 
   def create_post(name, body) do
-    Servy.GenServer.call(@name, {:create_post, name, body})
+    Servy.GenericServer.call(@name, {:create_post, name, body})
   end
 
   def get_recent_posts() do
-    Servy.GenServer.call(@name, :get_recent_post)
+    Servy.GenericServer.call(@name, :get_recent_post)
   end
 
   def clear() do
-    Servy.GenServer.cast(@name, :clear)
+    Servy.GenericServer.cast(@name, :clear)
   end
 
   def handle_call({:create_post, name, body}, state) do
