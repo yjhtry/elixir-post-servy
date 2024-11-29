@@ -38,6 +38,11 @@ defmodule Servy.PostGenServer do
     {:noreply, []}
   end
 
+  def handle_info(msg, state) do
+    IO.inspect("Can't touch this! #{inspect(msg)}")
+    {:noreply, state}
+  end
+
   defp generate_id() do
     :rand.uniform(1000)
   end
