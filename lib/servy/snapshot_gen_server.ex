@@ -1,9 +1,10 @@
 defmodule Servy.SnapshotGenServer do
-  use GenServer
   import Servy.SnapshotServer, only: [get_snapshot: 1]
 
   @name :snapshot_gen_server
   @delay :timer.minutes(60)
+
+  use GenServer
 
   def init(_args) do
     snapshots = get_snapshots()
@@ -12,8 +13,9 @@ defmodule Servy.SnapshotGenServer do
     {:ok, snapshots}
   end
 
-  def start() do
-    GenServer.start(__MODULE__, [], name: @name)
+  def start_link(interval) do
+    IO.puts("Starting the sensor server with #{interval} min refresh...")
+    GenServer.start_link(__MODULE__, [], name: @name)
   end
 
   def handle_info(:refresh, _state) do

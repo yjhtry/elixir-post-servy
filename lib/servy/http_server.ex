@@ -3,6 +3,7 @@ defmodule Servy.HttpServer do
     {:ok, listen_socket} =
       :gen_tcp.listen(port, [:binary, packet: :raw, active: false, reuseaddr: true])
 
+    IO.puts("Listening on port #{port}")
     accept_loop(listen_socket)
   end
 

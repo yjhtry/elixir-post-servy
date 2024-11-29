@@ -7,8 +7,9 @@ defmodule Servy.PostGenServer do
     {:ok, init_arg}
   end
 
-  def start() do
-    GenServer.start(__MODULE__, [], name: @name)
+  def start_link(_arg) do
+    IO.puts("Starting the PostGenServer server...")
+    GenServer.start_link(__MODULE__, [], name: @name)
   end
 
   def create_post(name, body) do
